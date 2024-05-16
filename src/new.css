@@ -1,0 +1,45 @@
+.assistance-request-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+  }
+
+  .assistance-request-container h2 {
+    font-size: 28px;
+    color: #333;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+
+  .form-check-input {
+    margin-top: 0.3rem;
+  }
+
+  #container{
+    margin-top: 100px;
+    background:linear-gradient(to right, #ffeeee, #ddefbb);
+  }
+
+.bg form input{
+ 
+  height: 55px;
+  border-radius: 10px;
+  
+}
+
+  
