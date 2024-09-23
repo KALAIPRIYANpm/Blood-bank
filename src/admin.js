@@ -14,7 +14,7 @@ const fetchAdminRecords=async()=>{
         const temp = await AdminRecords()
         console.log(temp.data)
         // alert(temp.data);
-        alert(JSON.stringify(temp.data));
+        // alert(JSON.stringify(temp.data));
     setadminrecs(temp.data)
     }
     catch(e){

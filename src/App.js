@@ -10,9 +10,16 @@ import image4 from './blood-donation.jpg'
 const LandingPage = () => {
   return (
 
+    
+
     // prompt("enter your name :");
 
     <div>
+
+      <script>
+
+       
+      </script>
               <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
               
 
@@ -22,7 +29,7 @@ const LandingPage = () => {
               </span>
         <div className="container">
         
-          <a  className="navbar-brand"  href="#home"><h4 style={{marginLeft:"-100px"}}>Blood Bank</h4></a>
+          <a  className="navbar-brand"  href="#home"><h4 style={{marginLeft:"-10px"}}>Blood Bank</h4></a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>

@@ -27,7 +27,8 @@ body {
 
   #navbarNav.nav-link:hover{
 
-    border:"2px white solid"
+    border-bottom:"2px white solid"
+    
     
   }
   
