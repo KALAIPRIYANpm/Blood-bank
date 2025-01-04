@@ -10,15 +10,8 @@ import image4 from './blood-donation.jpg'
 const LandingPage = () => {
   return (
 
-    
-
-    // prompt("enter your name :");
-
     <div>
-
       <script>
-
-       
       </script>
               <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
               

@@ -15,8 +15,6 @@ const Donor= () => {
     "address": ''
   });
 
-
-  
   const handleChange = (e) => {
     setFormData((old)=>({
       ...old,
@@ -29,6 +27,7 @@ const Donor= () => {
     try {
       await axios.post('http://localhost:1234/send', formData);
         setFormData({
+     "s_no":'',
     "name": '',
     "contact": '',
     "age": '',
@@ -37,14 +36,15 @@ const Donor= () => {
     "address": ''
         })
     } catch (error) {
-      console.error(error);
-      // alert(error)
+      console.error("Axios error:", error.response?.data || error.message); 
+      alert("Error occurred: " + (error.response?.data?.error || error.message));
     }
   };
 
 
   const cancleRequest=async(e)=>{
     setFormData({
+      "s_no":'',
     "name": '',
     "contact": '',
     "age": '',

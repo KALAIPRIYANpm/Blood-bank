@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './loginpage.css';
+import { Box, Card, CardContent, Typography, TextField, Button } from '@mui/material';
 
-function Login() {
+
+
+function Login() { 
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
   const handleLogin = (e) => {
     e.preventDefault();
     if (id === 'kalaipriyan7777@gmail.com' && password === 'kalai@2005') {
@@ -16,30 +18,70 @@ function Login() {
     }
   };
 
+
+
   return (
     <body style={{fontFamily:"times"}} className='col-md-12'>
     <div className='col-md-12'>
 
-    {/* ,background: 'linear-gradient(to right, white, red)' */}
+    {/* <link
+                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+                    rel="stylesheet"
+                // /> */}
     
-        <h2>Admin's Login</h2>
-    <div  style={{marginLeft:"400px",marginTop:"150px"}} className='card col-md-4'>
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
-
-      <h2 style={{paddingLeft:"150px"}} className='card card-header'>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div  className='col-md-9 mt-5 '>
-          <label>Email:</label>
-          <input style={{width:"350px",height:"50px"}} className='form form-control'  type="text" value={id} onChange={(e) => setId(e.target.value)} />
-        </div>
-        <div className='col-md-9 mt-2'>
-          <label>Password: </label>
-          <input style={{marginBottom:"25px",width:"350px",height:"50px"}} type="password" className='form form-control' value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button style={{marginLeft:"150px",marginBottom:"25px",marginTop:"25px"}} type="submit" className='btn btn-danger  mt-2'>Login</button>
-      </form>
-    </div>
-    
+        <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="90vh"
+      sx={{ backgroundColor: '#f5f5f5' }}
+    >
+      <Card sx={{ width: 330, padding: 3, boxShadow: 3 }}>
+        <CardContent>
+          <Typography sx={{marginTop:"-10px"}} variant="h5" style={{fontFamily:"times"}} component="div" gutterBottom align="center">
+            <b>Admin's Login</b>
+          </Typography>
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { marginBottom: 2 },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              fullWidth
+              label="Email"
+              variant="outlined"
+              type="email"
+              onChange={(e)=>setId(e.target.value)}
+              value={id}
+              required
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              variant="outlined"
+              type="password"
+              // placeholder='password'
+              onChange={(event)=>setPassword(event.target.value)}
+              value={password}
+              required
+            />
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ marginTop: 2 }}
+              onClick={handleLogin}
+             
+            >
+              Login
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
     
     </div>
    

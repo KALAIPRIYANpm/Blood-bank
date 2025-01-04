@@ -10,7 +10,6 @@ import Admin from "./admin"
 const RouterPath=()=>{
     return(
         <BrowserRouter>
-        
         <Routes>
             <Route path="/" element={<LandingPage/>}/>
             <Route path="/donor" element={<Donor/>}/>
