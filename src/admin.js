@@ -2,85 +2,94 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { AdminRecords } from './Axios';
 import './admin.css';
+import {
+    Box,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+    Paper,
+    CircularProgress,
+} from '@mui/material';
 
 const Admin = () => {
     const [adminrecs, setAdminRecs] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetchAdminRecords();
     }, []);
 
-
     const fetchAdminRecords = async () => {
         try {
             const temp = await AdminRecords();
-            // console.log("fetched records :",temp); 
-            setAdminRecs(temp.rows || []); 
+            setAdminRecs(temp.rows || []);
         } catch (e) {
             console.log(e);
+        } finally {
+            setLoading(false);
         }
     };
-    
 
     return (
-        <>
-            <div style={{ fontFamily: 'sans-serif' }}>
-                <link
-                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-                    rel="stylesheet"
-                />
+        <Box
+            sx={{
+                fontFamily: 'Roboto, sans-serif',
+                backgroundColor: '#f9f9f9',
+                minHeight: '100vh',
+                padding: 4,
+            }}
+        >
+            <Typography variant="h4" align="center" gutterBottom>
+                Admin Records
+            </Typography>
 
-
-                <div>
-                    <table className="table table-striped  col-md-12 col-sm-0">
-                        <thead className="table table-hover">
-                            <tr style={{backgroundColor:"grey"}}>
-                                <th>
-                                    <h3>S.no</h3>
-                                </th>
-                                <th>
-                                    <h3>Name</h3>
-                                </th>
-                                <th>
-                                    <h3>Contact</h3>
-                                </th>
-                                <th>
-                                    <h3>Age</h3>
-                                </th>
-                                <th>
-                                    <h3>Blood Group</h3>
-                                </th>
-                                <th>
-                                    <h3>Previous Donation</h3>
-                                </th>
-                                <th>
-                                    <h3>Address</h3>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
+                    <CircularProgress size={50} />
+                </Box>
+            ) : (
+                <TableContainer component={Paper} elevation={3} sx={{ maxWidth: '90%', margin: '0 auto', borderRadius: 2 }}>
+                    <Table>
+                        <TableHead>
+                            <TableRow sx={{ backgroundColor: '#424242' }}>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>S.No</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Name</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Contact</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Age</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Blood Group</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Previous Donation</TableCell>
+                                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Address</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {adminrecs.length > 0 ? (
                                 adminrecs.map((val, index) => (
-                                    <tr key={index}>
-                                        <td>{val.s_no}</td>
-                                        <td>{val.name}</td>
-                                        <td>{val.contact}</td>
-                                        <td>{val.age}</td>
-                                        <td>{val.blood_group}</td>
-                                        <td>{val.have_you_donated}</td>
-                                        <td>{val.address}</td>
-                                    </tr>
+                                    <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f5f5f5' } }}>
+                                        <TableCell>{val.s_no}</TableCell>
+                                        <TableCell>{val.name}</TableCell>
+                                        <TableCell>{val.contact}</TableCell>
+                                        <TableCell>{val.age}</TableCell>
+                                        <TableCell>{val.blood_group}</TableCell>
+                                        <TableCell>{val.have_you_donated}</TableCell>
+                                        <TableCell>{val.address}</TableCell>
+                                    </TableRow>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan="7">No Records</td>
-                                </tr>
+                                <TableRow>
+                                    <TableCell colSpan={7} align="center">
+                                        No Records Found
+                                    </TableCell>
+                                </TableRow>
                             )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            )}
+        </Box>
     );
 };
 
