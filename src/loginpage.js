@@ -1,107 +1,144 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./loginpage.css";
-import { Box, Card, CardContent, Typography, TextField, Button } from "@mui/material";
-import Validation from "./validation";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  TextField,
+  Typography,
+  Alert,
+} from "@mui/material";
 
-function Login() {
-  const [formData, setFormData] = useState({
-    id: "",
+// Validation function
+const validateInputs = (values) => {
+  const errors = {};
+  if (!values.email) {
+    errors.email = "Email is required";
+  } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = "Invalid email format";
+  }
+
+  if (!values.password) {
+    errors.password = "Password is required";
+  }
+  return errors;
+};
+
+const LoginPage = () => {
+  const [values, setValues] = useState({
+    email: "",
     password: "",
   });
-  const [error, setError] = useState({});
+
+  const [errors, setErrors] = useState({});
+  const [apiMessage, setApiMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  // Handle form inputs
+  const handleInputs = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const validate = Validation(formData);
-    setError(validate);
+  // Handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const validationErrors = validateInputs(values);
+    setErrors(validationErrors);
 
-    if (Object.keys(validate).length === 0) {
-      if (formData.id === "kalaipriyan7777@gmail.com" && formData.password === "Kalai@2005") {
-        navigate("/adminhome");
-      } else {
-        alert("Invalid credentials");
+    if (Object.keys(validationErrors).length === 0) {
+      try {
+        // Make the API call to the backend
+        const response = await axios.post("http://localhost:1234/login", values);
+        console.log(response.data);
+
+        // Show success message and navigate to the dashboard
+        setApiMessage("Login successful! Redirecting...");
+        setTimeout(() => navigate("/adminhome"), 2000); // Adjust path as needed
+      } catch (err) {
+        console.error("API Error:", err.message);
+        setApiMessage(
+          err.response?.data?.message || "An error occurred during login."
+        );
       }
+    } else {
+      setApiMessage("");
     }
   };
 
   return (
-    <body style={{ fontFamily: "times" }} className="col-md-12">
-      <div className="col-md-12">
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          minHeight="90vh"
-          sx={{ backgroundColor: "#f5f5f5" }}
-        >
-          <Card sx={{ width: 330, padding: 3, boxShadow: 3 }}>
-            <CardContent>
-              <Typography
-                sx={{ marginTop: "-10px" }}
-                variant="h5"
-                style={{ fontFamily: "times" }}
-                component="div"
-                gutterBottom
-                align="center"
-              >
-                <b>Admin's Login</b>
-              </Typography>
-              <Box
-                component="form"
-                sx={{
-                  "& .MuiTextField-root": { marginBottom: 2 },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  fullWidth
-                  label="Email"
-                  variant="outlined"
-                  type="email"
-                  name="id"
-                  onChange={handleChange}
-                  value={formData.id}
-                  required
-                />
-                {error.id && <span className="text-danger">{error.id}</span>}
-
-                <TextField
-                  fullWidth
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                  onChange={handleChange}
-                  value={formData.password}
-                  required
-                />
-                {error.password && <span className="text-danger">{error.password}</span>}
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  sx={{ marginTop: 2 }}
-                  onClick={handleLogin}
-                >
-                  Login
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
-        </Box>
-      </div>
-    </body>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#f5f5f5",
+      }}
+    >
+      <Card sx={{ maxWidth: 400, width: "100%", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h5" align="center" gutterBottom>
+            Admin's Login
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              name="email"
+              placeholder="Enter your email"
+              onChange={handleInputs}
+              value={values.email}
+              error={Boolean(errors.email)}
+              helperText={errors.email}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              onChange={handleInputs}
+              value={values.password}
+              error={Boolean(errors.password)}
+              helperText={errors.password}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ marginTop: 2 }}
+            >
+              Login
+            </Button>
+          </form>
+          {apiMessage && (
+            <Alert
+              severity={apiMessage.includes("successful") ? "success" : "error"}
+              sx={{ marginTop: 2 }}
+            >
+              {apiMessage}
+            </Alert>
+          )}
+          <Box textAlign="center" sx={{ marginTop: 2 }}>
+            <Button
+              onClick={() => navigate("/signup")}
+              color="primary"
+              variant="text"
+            >
+              Don't have an account? Signup here.
+            </Button>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
   );
-}
+};
 
-export default Login;
+export default LoginPage;

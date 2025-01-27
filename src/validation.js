@@ -5,9 +5,9 @@ const Validation = (data) => {
   
     if (!data.id) {
       error.id = "Email should not be empty";
-    } else if (!email_pattern.test(data.id.trim())) {
+    } else if (!email_pattern.test(data.id.trim())){
       error.id = "Invalid email format";
-    }
+}
   
     if (!data.password) {
       error.password = "Password should not be empty";
